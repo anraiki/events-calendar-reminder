@@ -11,7 +11,7 @@ The plugin should remind the user sometime before the event starts.
 # Prerequisites
 
 * CRON jobs - Have a web host or server with this feature
-* 3rd Party SMTP like Sendgrid 
+* 3rd Party SMTP like Sendgrid (optional if your server can handle mailing)
 * Events Calendar Ticket
 
 # Installation
