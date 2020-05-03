@@ -72,24 +72,6 @@ if( class_exists("Tribe__Tickets__Tickets") ) {
         }
     }
 
-    //Cron Job Feature
-    add_filter( 'cron_schedules', 'event_reminder_cronjob' );
-    function event_reminder_cronjob( $schedules ) {
-        $schedules['event_reminder'] = array(
-                'interval'  => 300,
-                'display'   => __( 'Every 5 Minutes run the Event Reminder', 'event-reminder' )
-        );
-        return $schedules;
-    }
-
-    // Schedule an action if it's not already scheduled
-    if ( ! wp_next_scheduled( 'event_reminder_cronjob' ) ) {
-        wp_schedule_event( time(), 'event_reminder', 'event_reminder_cronjob' );
-    }
-
-    // Hook into that action that'll fire every three minutes
-    add_action( 'event_reminder_cronjob', 'event_calendar_email_reminder' );
-
 }
 
 ?>
