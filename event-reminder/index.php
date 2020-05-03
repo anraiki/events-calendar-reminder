@@ -1,17 +1,6 @@
 <?php
 
-/*
- * Template Name: Event Tester
- * description: >-
-  Page template without sidebar
- */
-
-// * For Debugging Purpose, 
-// * * Stick this page template into your theme
-// * * Make a New Page
-// * * Run it as a template under "Event Tester"
-// * * And customize away
-
+//Establish Reminders
 $reminders = [];
 
 //First Reminder
@@ -25,7 +14,6 @@ $reminders[] = [
     "label" => "last",
     "time" => "-3 hours", 
 ];
- 
 
 if( class_exists("Tribe__Tickets__Tickets") ) {
 
@@ -83,10 +71,20 @@ if( class_exists("Tribe__Tickets__Tickets") ) {
     }
 
     // Schedule an action if it's not already scheduled
-    if ( ! wp_next_scheduled( 'event_reminder_cronjob' ) ) {
-        wp_schedule_event( time(), 'event_reminder', 'event_reminder_cronjob' );
+    function event_calendar_reminder_activation(){
+        if ( ! wp_next_scheduled( 'event_reminder_cronjob' ) ) {
+            wp_schedule_event( time(), 'event_reminder', 'event_reminder_cronjob' );
+        }
     }
+    register_activation_hook(   __FILE__, 'event_calendar_reminder_activation' );
 
+    function event_calendar_reminder_deactivation(){
+        if( wp_next_scheduled( 'event_reminder_cronjob' ) ){
+            wp_clear_scheduled_hook( 'event_reminder_cronjob' );
+        }
+    }
+    register_deactivation_hook( __FILE__, 'event_calendar_reminder_deactivation' );
+    
     // Hook into that action that'll fire every three minutes
     add_action( 'event_reminder_cronjob', 'event_calendar_email_reminder' );
 
