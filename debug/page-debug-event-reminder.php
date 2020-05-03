@@ -14,7 +14,7 @@
 
 $reminders = [];
 
-//Last Reminder
+//First Reminder
 $reminders[] = [
     "label" => "first",
     "time" => "-72 hours", 
