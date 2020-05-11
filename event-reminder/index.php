@@ -1,5 +1,7 @@
 <?php
 
+$current_time = strtotime("now");
+
 //Establish Reminders
 $reminders = [];
 
@@ -43,7 +45,7 @@ if( class_exists("Tribe__Tickets__Tickets") ) {
 
                 // Check if our Current Time has pass the Reminder Time
                 // And if we have not sent the reminder, then we can send one
-                if( strtotime($current_time) > strtotime($reminder_time) && !$reminder_flag ) {
+                if( $current_time > strtotime(date_format($reminder_time, "Y-m-d H:i:s")) && !$reminder_flag ) {
                     
                     // We are ready to Email
                     foreach( $emails as $email ) {
