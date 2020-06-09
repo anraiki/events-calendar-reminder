@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * @package Events Reminder
+ */
+/*
+Plugin Name: Events Ticket Reminder
+Description: Event Calendar and Event Ticket reminder
+Version: 1.0.0
+Author: Henry Tran
+Author URI: https://anraiki.com/
+License: GPLv2 or later
+Text Domain: events-reminder
+*/
+
 $current_time = strtotime("now");
 
 //Establish Reminders
@@ -17,7 +30,6 @@ $reminders[] = [
     "time" => "-3 hours", 
 ];
 
-if( class_exists("Tribe__Tickets__Tickets") ) {
 
     function event_calendar_email_reminder() {
         //Set Event Parameters and grab future events
@@ -78,7 +90,7 @@ if( class_exists("Tribe__Tickets__Tickets") ) {
             wp_schedule_event( time(), 'event_reminder', 'event_reminder_cronjob' );
         }
     }
-    register_activation_hook(   __FILE__, 'event_calendar_reminder_activation' );
+    register_activation_hook( __FILE__, 'event_calendar_reminder_activation' );
 
     function event_calendar_reminder_deactivation(){
         if( wp_next_scheduled( 'event_reminder_cronjob' ) ){
@@ -89,7 +101,5 @@ if( class_exists("Tribe__Tickets__Tickets") ) {
     
     // Hook into that action that'll fire every three minutes
     add_action( 'event_reminder_cronjob', 'event_calendar_email_reminder' );
-
-}
-
+    
 ?>
